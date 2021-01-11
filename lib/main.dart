@@ -16,24 +16,27 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var _questionIndex = 0;
+    var _totalscore = 0;
     final _questions = [
       {
         'questionText': 'What\'s your name',
-        'answers': ['Black', 'Red', 'Green', 'Yellow'],
+        'answers': [{'text':'Black','score':5}, {'text':'Red','score':10}, {'text':'Green','score':5}, {'text':'Yellow','score':6}],
       },
       {
         'questionText': 'What\'s your favourite animal',
-        'answers': ['Dog', 'Cat', 'Birds', 'Horse'],
+        'answers': [{'text':'Dog','score':10}, {'text':'Cat','score':3}, {'text':'Birds','score':6}, {'text':'Horse','score':8}],
       },
       {
         'questionText': 'What\'s your country',
-        'answers': ['India', 'Australia', 'UK', 'China'],
+        'answers': [{'text':'India','score':8}, {'text':'Australia','score':4}, {'text':'UK','score':7}, {'text':'China','score':0}],
       },
     ];
 
-    void _answerQuestion() {
+    void _answerQuestion(int score) {
       // var aBool = true;
       // aBool = false;
+
+      _totalscore += score;
       setState(() {
         _questionIndex = _questionIndex + 1;
       });
