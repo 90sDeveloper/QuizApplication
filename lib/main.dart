@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
-
+import 'package:quizapp/result.dart';
+import './quiz.dart';
+import './result.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -13,17 +13,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var _questionIndex = 0;
-  void _answer() {
-    setState(() {
-      _questionIndex = _questionIndex + 1;
-    });
-    print(_questionIndex);
-  }
-
   @override
   Widget build(BuildContext context) {
-    var questions = [
+    var _questionIndex = 0;
+    final _questions = [
       {
         'questionText': 'What\'s your name',
         'answers': ['Black', 'Red', 'Green', 'Yellow'],
@@ -37,20 +30,35 @@ class _MyAppState extends State<MyApp> {
         'answers': ['India', 'Australia', 'UK', 'China'],
       },
     ];
+
+    void _answerQuestion() {
+      // var aBool = true;
+      // aBool = false;
+      setState(() {
+        _questionIndex = _questionIndex + 1;
+      });
+      print(_questionIndex);
+      if (_questionIndex < _questions.length) {
+        print('We have more questions');
+      } else {
+        print('No more questions');
+      }
+    }
+
+    //questions = []; does not work if question is const type
+    // var dummy = ['Hello'];
+    // dummy.add('Murli');
+    // print(dummy);
+    // dummy=[];
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Quiz Application'),
         ),
-        body: Column(children: [
-          Question(
-            questions[_questionIndex]['questionText'],
-          ),
-          ...(questions[_questionIndex]['answers'] as List<String>)
-              .map((answer) {
-            return Answer(_answer, answer);
-          }).toList()
-        ]),
+        body: _questionIndex < _questions.length
+            ? Quiz(answerQuestion: _answerQuestion, questionIndex: _questionIndex,questions: _questions,)
+            : Result(),
       ),
     );
   }
